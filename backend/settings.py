@@ -16,6 +16,11 @@ import dotenv
 import dj_database_url
 import os
 
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,8 +35,6 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9t3a=rhv3!x@0*g8-@v00aa3k6m3u!myb^e8d!@m8$phpeops9'
 SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
