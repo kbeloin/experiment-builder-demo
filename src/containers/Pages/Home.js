@@ -93,7 +93,8 @@ class Home extends React.PureComponent {
                 </>
               )}
             </Card.Group>
-            {/* <Message
+
+            {/* <Message  
               warning
               style={{
                 placeSelf: "flex-start",
