@@ -16,11 +16,6 @@ import dotenv
 import dj_database_url
 import os
 
-import environ
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,13 +29,13 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.getenv('SECRET_KEY')
 SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['react-dj-todoapp.herokuapp.com', '127.0.0.1:8000', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1:8000', 'localhost', 'kylebeloin.com']
 
 
 # Application definition
@@ -80,7 +75,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:3000',
     'https://intonationpractice.app',
-    'https://intonation-trainer.s3.us-east-2.amazonaws.com'
+    os.getenv("S3_ENDPOINT"),
 ]
 
 ROOT_URLCONF = 'backend.urls'

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
-import rg4js from "raygun4js";
 import Hoc from "./hoc/hoc";
 
 import LoginForm from "./containers/Login/LoginForm";
@@ -21,11 +20,6 @@ import Experiment from "./containers/Experiments/Experiment";
 // warn user if they try to leave the page without saving
 const BaseRouter = ({ auth, is_moderator }) => {
   const location = useLocation();
-
-  useEffect(() => {
-    rg4js("trackEvent", { type: "pageView", path: location.pathname });
-  }, [location]);
-
   return (
     <Hoc>
       <Route exact path="/login/" component={LoginForm} />

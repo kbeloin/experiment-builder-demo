@@ -12,9 +12,16 @@ from botocore.config import Config
 import boto3
 import json
 import os
-import subprocess
-
+import dotenv
+from pathlib import Path
 from .utility import audio_convert, parselmouth_tools as praat
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
+
 
 class StringSerializer(serializers.StringRelatedField):
     def to_internal_value(self, value):
@@ -43,7 +50,8 @@ class PreSignedURLSerializer(serializers.ModelSerializer):
         else:
             file_extension = mimetypes.guess_extension(content_type)
 
-        key = f'experiment-reponse-data/{object_name}{file_extension}'
+        directory = os.getenv('S3_BUCKET_DIR')
+        key = f'{directory}/{object_name}{file_extension}'
         
         f.created_by = data["user"]
         f.bucket_key = key
@@ -62,9 +70,9 @@ class PreSignedURLSerializer(serializers.ModelSerializer):
         key = file_object.bucket_key
 
 
-        s3 = boto3.resource('s3', config=Config(signature_version='s3v4', region_name='us-east-2'))
+        s3 = boto3.resource('s3', config=Config(signature_version='s3v4', region_name=os.getenv('S3_REGION')))
         try:
-            bucket = 'intonation-trainer'
+            bucket = os.getenv('S3_BUCKET')
 
             # Generate a pre-signed URL for the file
             pre_signed_post = s3.meta.client.generate_presigned_post(bucket,
@@ -90,7 +98,7 @@ class PreSignedURLSerializer(serializers.ModelSerializer):
         key = file_object.bucket_key
 
         s3 = boto3.resource('s3', config=Config(signature_version='s3v4', region_name='us-east-2'))
-        bucket = 'intonation-trainer'
+        bucket =  os.getenv('S3_BUCKET')
         s3_client = boto3.client('s3')
         object_acl = s3.ObjectAcl(bucket,key)
 
@@ -157,8 +165,9 @@ class FileUploadSerializer(serializers.ModelSerializer):
         s3 = boto3.resource('s3', config=Config(signature_version='s3v4', region_name='us-east-2'))
         try:
             file = self.temp_file.name
-            key = f'experiment-reponse-data/{object_name}{file_extension}'
-            bucket = 'intonation-trainer'
+            directory= os.getenv('S3_BUCKET_DIR')
+            key = f'{directory}/{object_name}.wav'
+            bucket =  os.getenv('S3_BUCKET')
             
             response = s3.Bucket(bucket).upload_file(file, key, ExtraArgs={'ACL': 'public-read','ContentType': content_type})
             # pre_signed = s3.meta.client.generate_presigned_url('get_object',
@@ -199,10 +208,10 @@ class FileUploadSerializer(serializers.ModelSerializer):
         if key is None:
             return False
         # Generate the presigned get url
-        s3 = boto3.client('s3', config=Config(signature_version='s3v4', region_name='us-east-2'))
+        s3 = boto3.client('s3', config=Config(signature_version='s3v4', region_name=os.getenv('S3_REGION')))
         try:
             presigned_url = s3.generate_presigned_url('get_object',
-                                                      Params={'Bucket': 'intonation-trainer',
+                                                      Params={'Bucket':  os.getenv('S3_BUCKET'),
                                                                 'Key': key},
                                                         ExpiresIn=60000)
         except ClientError as e:
@@ -231,11 +240,12 @@ class AudioFileSerializer(FileUploadSerializer):
         except:
             object_name = os.path.basename(self.temp_file.name)
         
-        s3 = boto3.resource('s3', config=Config(signature_version='s3v4', region_name='us-east-2'))
+        s3 = boto3.resource('s3', config=Config(signature_version='s3v4', region_name=os.getenv('S3_REGION')))
         try:
             file = self.temp_file.name
-            key = f'experiment-reponse-data/{object_name}.wav'
-            bucket = 'intonation-trainer'
+            directory= os.getenv('S3_BUCKET_DIR')
+            key = f'{directory}/{object_name}.wav'
+            bucket =  os.getenv('S3_BUCKET')
         
             response = s3.Bucket(bucket).upload_file(file, key, ExtraArgs={'ACL': 'public-read', 'ContentType': 'audio/wav'})
             endpoint = urlparse(s3.meta.client.meta.endpoint_url)
