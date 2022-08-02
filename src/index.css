@@ -1,0 +1,72 @@
+:root {
+  --primary-fg-color: #282c34;
+  --primary-bg-color-dark: #282c34;
+  --primary-bg-color-light: #f8f8f8;
+  --secondary-bg-color-light: #ffffff;
+  --primary-bg-color-dark-transparent: rgba(112, 128, 144, 0.9);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.module-controls {
+  width: calc(100% + 1px) !important;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+.module-controls__container.module-controls__container.module-controls__container {
+  width: 100% !important;
+  margin-left: 0 !important;
+
+  margin-right: 0 !important;
+}
+
+.ui.checkbox input.hidden {
+  z-index: 3 !important;
+}
+
+img.ui.segment {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 470px;
+}
+
+.ui.grid > .row:first-child {
+  padding-top: 0;
+}
+
+#question-data {
+  max-width: 470px;
+  max-height: 350px;
+}
+
+.ql-video,
+video {
+  aspect-ratio: 4/3;
+  width: min(50vw, 600px);
+}
+
+.bg-none {
+  background-color: transparent !important;
+}
+
+p {
+  font-size: 16px;
+}
