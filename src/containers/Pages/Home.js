@@ -93,7 +93,7 @@ class Home extends React.PureComponent {
                 </>
               )}
             </Card.Group>
-            <Message
+            {/* <Message
               warning
               style={{
                 placeSelf: "flex-start",
@@ -131,7 +131,7 @@ class Home extends React.PureComponent {
                   browsers. <b>Safari will not work.</b>
                 </Message.Item>
               </Message.List>
-            </Message>
+            </Message> */}
           </div>
         )}
       </Hoc>
