@@ -29,7 +29,7 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-SECRET_KEY = os.environ('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -75,7 +75,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:3000',
     'https://intonationpractice.app',
-    os.environ("S3_ENDPOINT"),
+    os.environ["S3_ENDPOINT"],
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -186,7 +186,7 @@ REST_FRAMEWORK = {
     )
 }
 
-AWS_S3_REGION_NAME = 'us-east-2' #change to your region
+AWS_S3_REGION_NAME = os.environ['S3_REGION'] #change to your region
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 # Configure Django App for Heroku.
