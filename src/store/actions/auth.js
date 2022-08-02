@@ -1,5 +1,4 @@
 import axios from "axios";
-import rg4js from "raygun4js";
 import * as actionTypes from "./actionTypes";
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -16,13 +15,6 @@ export const authSuccess = (user, callback) => {
     callback(user);
   }
 
-  console.log(`authSuccess: setting user for raygun: ${user.username}`);
-  rg4js("setUser", {
-    identifier: user.userId,
-    isAnonymous: false,
-    fullName: user.username,
-  });
-
   return {
     type: actionTypes.AUTH_SUCCESS,
     user,
@@ -33,7 +25,6 @@ export const authAddUserSuccess = (user, callback) => {
   if (callback !== undefined) {
     callback(user);
   }
-  // try to set user for raygun
 
   return {
     type: actionTypes.AUTH_ADDUSER_SUCCESS,
@@ -61,11 +52,6 @@ export const authFail = (error, callback) => {
 
 export const logout = () => {
   localStorage.removeItem("user");
-  rg4js("endSession");
-
-  rg4js("setUser", {
-    isAnonymous: true,
-  });
 
   return {
     type: actionTypes.AUTH_LOGOUT,
