@@ -29,13 +29,13 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.environ('SECRET_KEY')
 SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1:8000', 'localhost', 'kylebeloin.com']
+ALLOWED_HOSTS = ['127.0.0.1:8000', 'localhost', 'kylebeloin.com', 'experiment-builder-demo.herokuapp.com']
 
 
 # Application definition
@@ -75,7 +75,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'https://localhost:3000',
     'https://intonationpractice.app',
-    os.getenv("S3_ENDPOINT"),
+    os.environ("S3_ENDPOINT"),
 ]
 
 ROOT_URLCONF = 'backend.urls'
