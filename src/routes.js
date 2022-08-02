@@ -19,7 +19,6 @@ import ExperimentCreate from "./containers/Experiments/ExperimentCreate";
 import Experiment from "./containers/Experiments/Experiment";
 // warn user if they try to leave the page without saving
 const BaseRouter = ({ auth, is_moderator }) => {
-  const location = useLocation();
   return (
     <Hoc>
       <Route exact path="/login/" component={LoginForm} />

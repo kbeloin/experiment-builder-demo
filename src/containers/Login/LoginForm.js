@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
               Login
             </Button>
             {/* Message reminding the user to not use Safari or mobile devices in a list*/}
-            <Message
+            {/* <Message
               warning
               style={{
                 placeSelf: "flex-start",
@@ -113,7 +113,7 @@ class LoginForm extends React.Component {
                   browsers. <b>Safari will not work.</b>
                 </Message.Item>
               </Message.List>
-            </Message>
+            </Message> */}
           </Segment>
         </Form>
       </React.Fragment>
